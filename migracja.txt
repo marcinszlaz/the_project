@@ -1,0 +1,21 @@
+** MIGRACJA BAZY DANYCH SQLITE DO MYSQL **
+## METODA 1
+- sudo apt install sqlite3
+- sqllite3 baza_danych_sqlite.db .dump > plik_tekstowy_w_dialekcie_sqlite
+- sqlite3-to-mysql -skrypt podmieniajacy dialekt SQLite na MySQL,
+- można pobrać ten plik z githuba tengla/sqlite3-to-mysql ma 9 lat (2026) 
+- plik jest pobrany, wrzucony do folderu ~/praca/docker/migration_venv
+- sqlite3-to-mysql filename.sql > filename.new.sql
+## METODA 2
+- logujesz sie do mysql, CREATE DATABASE baza_danych_mysql;
+- pip install sqlite3-to-mysql (musisz w venv `python3 -m venv venv, inaczej   dupa atp sobie nie radzi ,nie ma pakietu)
+- sqlite3mysql -f plik_bazy_danych_sqlite -u user_mysql -p -h ip_nasłuchu_mysql -P port_nasłuchu_mysql -d baza_danych_mysql, ENTER :)
+- dodatkowo jak bd wywalac blad ` Can't connect to MySQL server on 'localhost:3306 ` to sprawdz `sudo ss -tlnp | grep mysql` na czym slucha demon mysql, zmieniasz hosta i port w komendzie -h 10.215.14.30 -P port
+
+- mysql -u user_login -p nazwa_bazy < plik.MySQL
+- operator `<` ładuje zawartość z pliku do bazy
+- to też działa (z pliku data_base do pliku data_base) ale musisz enable --binary-mode, ale poprzednie opcje sa czystsze
+- DUŻO SZYBCIEJ BYŁO PO PROSTU ODPALIĆ TĄ BAZĘ W SQLITE3, jeśli chodzi tylko o sam podgląd tabel itp
+- sqlite <nazwa_db>, .tables .databases .exit
+- SELECT * FROM <tabelka>
+
