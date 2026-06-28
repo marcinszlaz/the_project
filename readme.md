@@ -7,7 +7,7 @@
 * `FLASK_RUN_HOST=0.0.0.0` `FLASK_RUN_PORT=5005` - put it inside .flaskenv file
 
 # commands FLASK ALEMBIC
-
+* explanation - this module handles db migration
 * pip install flask-migrate
 * from.flask_migrate.import.Migrate 
 * after those actions above flask command  gets magic powers and can do this below
@@ -24,9 +24,16 @@
 
 # some commands in vim
 
-*.`:9,18norm.i#`.-.this.way.you.can.handle.multiline.comments.in.vim
-*.`:9,18norm.x`.-.delete.one.char.(#),.you.can.use.visual.too
+*.`:9,18norm i#`.-.this.way.you.can.handle.multiline.comments.in.vim
+*.`:9,18norm x`.-.delete.one.char.(#),.you.can.use.visual.too
 * `:9,21s/^#/`.-.this.also.remove.(substitiute).#.to.`.`
 * `v.-.visual.:s/^#//` .equal.this.above
 * `^` it means "first char" like in xpath / css selectors
 * ctrl.-.y.means.YES.for.chosen.tips.from.plugins.in.vim
+
+# commands in pip
+* explanation - commands installing Python packages
+*  pip freeze > requirements.txt - freezes project requirements/dependencies
+*  pip install -r requirements.txt - install according requirements.txt file
+*  pip install flask-login
+* 

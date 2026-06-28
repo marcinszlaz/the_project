@@ -1,12 +1,15 @@
-from app import app
+from flask_login  import current_user, login_user, logout_user, login_required
+import sqlalchemy as sa
+from flask import jsonify, render_template, flash, redirect, url_for, request
+from urllib.parse import urlsplit
+from app import app, db
 from app.forms import LoginForm
-from flask import jsonify, render_template, flash, redirect, url_for
-
+from app.models import User
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-    user = {'username': 'Marcin'}
     title = 'FullCallendar'
     posts = [
         {
@@ -18,7 +21,7 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title = title, user = user, posts = posts)
+    return render_template('index.html', title = title, posts = posts)
 
 
 @app.route('/apiv1/req')
@@ -28,12 +31,28 @@ def req():
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     title = 'Zaloguj się'
     if form.validate_on_submit():
-        flash('Prośba o logowanie dla użytkownika {}, opcja zapamiętania: {}'        .format(form.username.data, 'Prawda' if form.remember_me.data == True        else 'Fałsz'))
-        return redirect(url_for('index'))
+        user = db.session.scalar(
+            sa.select(User).where(User.username == form.username.data))
+        if user is None or not user.check_password(form.password.data):
+            flash('Niepoprawna nazwa użytkownika lub hasło')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or urlsplit(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('login.html', form = form, title = title)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 # at the beginning, this part started from line 21

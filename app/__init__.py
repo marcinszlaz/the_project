@@ -10,12 +10,16 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 #Alembic wrapper
+from flask_login import LoginManager
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
+login = LoginManager(app)
+login.login_view = 'login'
+login.login_message = 'Dostęp do strony wymaga zalogowania się'
 #it's one way to do this, but we do it different
 #app.config['SECRET_KEY'] = 'you-will-never=guess'
 # ... add more variables here as needed
