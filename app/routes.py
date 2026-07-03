@@ -5,8 +5,9 @@ from flask import (jsonify, render_template, flash,
                    redirect, url_for, request)
 from urllib.parse import urlsplit
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm
 from app.models import User
+from datetime import datetime, timezone
 
 @app.route('/')
 @app.route('/index')
@@ -83,6 +84,30 @@ def user(username):
     return render_template('user.html', user = user, posts = posts)
 
 
+@app.route('/edit_profile', methods = ['POST','GET'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Twoje zmiany zostały zapisane.')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html', 
+                           title = 'Edycja Profilu', form = form)
+
+@app.before_request
+# extremly usefull decorator, executes code before any of view function
+# in the application, automaticly, you don't have `use` this function explicitly
+# you can reach username in User class by current_user and modify last_seen
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.now(timezone.utc)
+        db.session.commit()
 
 
 # at the beginning, this part started from line 21
