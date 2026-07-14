@@ -11,10 +11,10 @@
 * pip install flask-migrate
 * from.flask_migrate import.Migrate 
 * after those actions above flask command  gets magic powers and can do this below
-* ```flask db init` -  (in folder above app package, within venv not in flask shell)
+* `flask db init` -  (in folder above app package, within venv not in flask shell)
 * initialize database migrator,
-* `````````flask db migrate -m "your comment"` - first migration with comment, it populates folder migrations/versions with database script
-* `````````````flask db upgrade````` - upgrades database from script, it'll create physical db on hardrive
+* `flask db migrate -m "your comment"` - first migration with comment, it populates folder migrations/versions with database script
+* `flask db upgrade` - upgrades database from script, it'll create physical db on hardrive
 * `flask db downgrade` - it can also downgrade it!
 * `flask db upgrade/downgrade <revision_id>` - type explicitly rev_id to get desired version of db
 *  `flask db upgrade head` - upgrade to the newest version

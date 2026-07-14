@@ -2,7 +2,6 @@ import os
 import pathlib
 from dotenv import load_dotenv
 
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 dotenv_path = pathlib.Path.cwd() / '.env'
 #print(dotenv_path) output => /home/xxx/praca/python/VirtualEnvironments/the_project/.env

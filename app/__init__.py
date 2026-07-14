@@ -24,8 +24,8 @@ login.login_message = 'Dostęp do strony wymaga zalogowania się'
 #app.config['SECRET_KEY'] = 'you-will-never=guess'
 # ... add more variables here as needed
   
-from app import routes, models 
+from app import routes, models, errors 
 #here you import file routes from namespace(folder)app
-#and import is made intentional not below first import but in line 10
-#it's about circural imports, this type of imprt helps avoid them
+#and import is made intentional not below first import but in line 29
+#it's about circural imports, this type of import helps avoid them
 
