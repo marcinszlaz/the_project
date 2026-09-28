@@ -29,7 +29,7 @@ def index():
 
 @app.route('/apiv1/req')
 def req():
-    return jsonify({'answer': 'Fuck you :-)'})
+    return jsonify({'answer': 'Fu*k you :-)'})
 
 
 @app.route('/login', methods = ['GET','POST'])

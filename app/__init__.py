@@ -1,15 +1,17 @@
-#Python interpreter treats folder with __init__.py file as a package
-#it's better to think about app folder as namespace not file with class/methods
-#and that's why you can import files from folder like class/methods
-#from ordinary files which have extension *.py
+# Python interpreter treats folder with __init__.py file as a package
+# it's better to think about app folder as namespace not file but namespace with class/methods
+# and that's why you can import files from folder like class/methods
+# from ordinary files which have extension *.py
 
 from flask import Flask
 from config import Config 
-#config.py in the_project folder
-#from app.config import Config #config.py in app folder
+# config.py in the_project folder
+# from app.config import Config #config.py in app folder
+# config.py file is on the same level as app package
+# I think, that's why you can import it directly
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-#Alembic wrapper
+# Alembic wrapper for Flask
 from flask_login import LoginManager
 
 
@@ -20,12 +22,12 @@ migrate = Migrate(app,db)
 login = LoginManager(app)
 login.login_view = 'login'
 login.login_message = 'Dostęp do strony wymaga zalogowania się'
-#it's one way to do this, but we do it different
-#app.config['SECRET_KEY'] = 'you-will-never=guess'
+# it's one way to do this, but we do it different
+# app.config['SECRET_KEY'] = 'you-will-never=guess'
 # ... add more variables here as needed
   
 from app import routes, models, errors 
-#here you import file routes from namespace(folder)app
-#and import is made intentional not below first import but in line 29
-#it's about circural imports, this type of import helps avoid them
+# here you import file routes from namespace(folder)app
+# and import is made intentional not below first import but in line 29
+# it's about circural imports, this type of import helps avoid them
 
